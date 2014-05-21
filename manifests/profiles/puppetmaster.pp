@@ -43,7 +43,7 @@ class common::profiles::puppetmaster(
         server_dynamic_environments => hiera('profiles::puppetmaster::dynamic_env',true),
         server_common_modules_path  => [],
         server_template             => 'common/profiles/puppet/server/puppet.conf.erb',
-        version                     => '3.5.1-1puppetlabs1'
+        version                     => 'present',
     }
 
 
