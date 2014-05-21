@@ -34,6 +34,7 @@ class common::profiles::puppetmaster(
     $use_puppetboard=hiera('profiles::puppetmaster::use_puppetboard',false)
 ) {
 
+
     class { 'puppet':
         server                      => true,
         server_reports              => hiera('profiles::puppetmaster::reports','store'),
@@ -42,6 +43,7 @@ class common::profiles::puppetmaster(
         server_dynamic_environments => hiera('profiles::puppetmaster::dynamic_env',true),
         server_common_modules_path  => [],
         server_template             => 'common/profiles/puppet/server/puppet.conf.erb',
+        version                     => '3.5.1-1puppetlabs1'
     }
 
 
@@ -64,6 +66,11 @@ class common::profiles::puppetmaster(
         }
 
         if $use_puppetboard {
+
+            Python::Virtualenv {
+              path => ['/bin', '/usr/bin', '/usr/sbin', '/usr/local/bin' ],
+            }
+
             include apache
             include apache::mod::wsgi
             include puppetboard
